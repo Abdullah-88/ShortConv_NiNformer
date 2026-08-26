@@ -15,21 +15,21 @@ class FeedForward(nn.Module):
         return self.net(x)
         
 class ShortConv(nn.Module):
-    def __init__(self, dim,hidden_dim, kernel_size=4):
+    def __init__(self, dim, hidden_dim, kernel_size = 4):
         super().__init__()
         self.dim = dim
         
         self.short_conv = nn.Conv1d(
-            in_channels=dim,
-            out_channels=dim,
-            kernel_size=kernel_size,
-            padding=kernel_size - 1,
-            groups=dim 
+            in_channels = dim,
+            out_channels = dim,
+            kernel_size = kernel_size,
+            padding = kernel_size - 1,
+            groups = dim 
         )
       
-        self.value_proj =  nn.Linear(dim,hidden_dim,bias=False)
-        self.gate_proj = nn.Linear(dim,hidden_dim,bias=False)
-        self.out_proj = nn.Linear(hidden_dim,dim,bias=False)
+        self.value_proj =  nn.Linear(dim, hidden_dim, bias = False)
+        self.gate_proj = nn.Linear(dim, hidden_dim, bias = False)
+        self.out_proj = nn.Linear(hidden_dim, dim, bias = False)
         self.gelu = nn.GELU()
         self.norm = nn.LayerNorm(dim)
         
@@ -50,8 +50,8 @@ class ShortConv(nn.Module):
 class MixerGatingUnit(nn.Module):
     def __init__(self,dim, hidden_dim):
         super().__init__()     
-        self.Mixer = ShortConv(dim,hidden_dim)
-        self.proj = nn.Linear(dim,dim)
+        self.Mixer = ShortConv(dim, hidden_dim)
+        self.proj = nn.Linear(dim, dim)
 
     def forward(self, x):
         u, v = x, x 
@@ -87,5 +87,4 @@ class NiNformer(nn.Module):
         )
 
     def forward(self, x):
-        return self.model(x)
-        
+        return self.model(x)        
